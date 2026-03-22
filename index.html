@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" data-tab="library">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IronFlow 💪</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-logo">
+    <span class="iron">IRON</span><span class="flow">FLOW</span>
+  </div>
+  <div class="splash-sub">NO EXCUSES. ONLY IRON.</div>
+  <div class="splash-bar"><div class="splash-fill"></div></div>
+</div>
+
+<!-- APP -->
+<div class="app" id="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">IRON<span>FLOW</span></div>
+    <div class="header-right">
+      <div class="streak-badge">🔥 <span id="streakCount">0</span> Day Streak</div>
+    </div>
+  </header>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <button class="nav-btn active" data-tab="library" onclick="switchTab('library')">
+      <span class="nav-icon">🏋️</span><span>Exercises</span>
+    </button>
+    <button class="nav-btn" data-tab="logger" onclick="switchTab('logger')">
+      <span class="nav-icon">📝</span><span>Log</span>
+    </button>
+    <button class="nav-btn" data-tab="supersets" onclick="switchTab('supersets')">
+      <span class="nav-icon">⚡</span><span>Splits</span>
+    </button>
+    <button class="nav-btn" data-tab="diet" onclick="switchTab('diet')">
+      <span class="nav-icon">🍗</span><span>Diet</span>
+    </button>
+    <button class="nav-btn" data-tab="playlist" onclick="switchTab('playlist')">
+      <span class="nav-icon">🎵</span><span>Music</span>
+    </button>
+    <button class="nav-btn" data-tab="ai" onclick="switchTab('ai')">
+      <span class="nav-icon">🤖</span><span>Coach</span>
+    </button>
+  </nav>
+
+  <!-- ===== EXERCISE LIBRARY ===== -->
+  <section class="tab-section" id="tab-library">
+    <div class="section-hero">
+      <h1 class="section-title">EXERCISE<br><span class="gold">LIBRARY</span></h1>
+      <p class="section-sub">Old school iron. New school results.</p>
+    </div>
+
+    <div class="body-parts">
+      <button class="part-btn active" onclick="filterPart('all')">ALL</button>
+      <button class="part-btn" onclick="filterPart('chest')">CHEST</button>
+      <button class="part-btn" onclick="filterPart('back')">BACK</button>
+      <button class="part-btn" onclick="filterPart('legs')">LEGS</button>
+      <button class="part-btn" onclick="filterPart('shoulders')">SHOULDERS</button>
+      <button class="part-btn" onclick="filterPart('arms')">ARMS</button>
+      <button class="part-btn" onclick="filterPart('core')">CORE</button>
+    </div>
+
+    <div class="exercise-grid" id="exerciseGrid"></div>
+  </section>
+
+  <!-- ===== WORKOUT LOGGER ===== -->
+  <section class="tab-section hidden" id="tab-logger">
+    <div class="section-hero">
+      <h1 class="section-title">WORKOUT<br><span class="gold">LOG</span></h1>
+      <p class="section-sub">Track every rep. Every set. Every kg.</p>
+    </div>
+
+    <div class="logger-form card">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Exercise</label>
+          <input type="text" id="logExercise" placeholder="e.g. Bench Press" />
+        </div>
+        <div class="form-group">
+          <label>Body Part</label>
+          <select id="logPart">
+            <option>Chest</option><option>Back</option><option>Legs</option>
+            <option>Shoulders</option><option>Arms</option><option>Core</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row three">
+        <div class="form-group">
+          <label>Sets</label>
+          <input type="number" id="logSets" placeholder="4" min="1" max="20" />
+        </div>
+        <div class="form-group">
+          <label>Reps</label>
+          <input type="number" id="logReps" placeholder="10" min="1" max="100" />
+        </div>
+        <div class="form-group">
+          <label>Weight (kg)</label>
+          <input type="number" id="logWeight" placeholder="60" min="0" max="500" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes (optional)</label>
+        <input type="text" id="logNotes" placeholder="Felt strong today..." />
+      </div>
+      <button class="btn-primary" onclick="logWorkout()">💪 LOG SET</button>
+    </div>
+
+    <!-- Today's Log -->
+    <div class="log-section">
+      <div class="log-header">
+        <h3>TODAY'S SESSION</h3>
+        <div class="calorie-burn" id="calorieBurn">
+          <span class="burn-num" id="burnNum">0</span>
+          <span class="burn-label">kcal burned</span>
+        </div>
+      </div>
+      <div id="calAnalogy" class="cal-analogy hidden"></div>
+      <div id="todayLog" class="today-log"></div>
+    </div>
+
+    <!-- History -->
+    <div class="log-section">
+      <h3>HISTORY</h3>
+      <div id="logHistory"></div>
+    </div>
+  </section>
+
+  <!-- ===== DIET PLAN ===== -->
+  <section class="tab-section hidden" id="tab-diet">
+    <div class="section-hero">
+      <h1 class="section-title">DIET &<br><span class="gold">NUTRITION</span></h1>
+      <p class="section-sub">Eat like a champion. Perform like one.</p>
+    </div>
+
+    <div class="diet-calc card">
+      <h3>📊 Calorie Calculator</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Weight (kg)</label>
+          <input type="number" id="dietWeight" placeholder="75" />
+        </div>
+        <div class="form-group">
+          <label>Height (cm)</label>
+          <input type="number" id="dietHeight" placeholder="175" />
+        </div>
+        <div class="form-group">
+          <label>Age</label>
+          <input type="number" id="dietAge" placeholder="22" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Gender</label>
+          <select id="dietGender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Goal</label>
+          <select id="dietGoal">
+            <option value="bulk">💪 Bulk</option>
+            <option value="cut">🔥 Cut</option>
+            <option value="maintain">⚖️ Maintain</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Activity</label>
+          <select id="dietActivity">
+            <option value="1.2">Sedentary</option>
+            <option value="1.375">Light (1-3x/week)</option>
+            <option value="1.55" selected>Moderate (3-5x/week)</option>
+            <option value="1.725">Heavy (6-7x/week)</option>
+            <option value="1.9">Athlete</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="calcDiet()">⚡ CALCULATE</button>
+    </div>
+
+    <div id="dietResult" class="hidden">
+      <div class="macro-cards" id="macroCards"></div>
+      <div class="meal-plan card" id="mealPlan"></div>
+    </div>
+
+    <!-- Legend Diet Tips -->
+    <div class="legends-section">
+      <h3 class="gold-title">LEGEND PRINCIPLES</h3>
+      <div class="legend-cards" id="legendCards"></div>
+    </div>
+  </section>
+
+  <!-- ===== SUPERSETS / DOUBLE BODY SPLITS ===== -->
+  <section class="tab-section hidden" id="tab-supersets">
+    <div class="section-hero">
+      <h1 class="section-title">DOUBLE<br><span class="gold">SPLITS</span></h1>
+      <p class="section-sub">Two muscle groups. One savage session. Zero excuses.</p>
+    </div>
+    <div class="ss-intro card">
+      <div style="font-size:24px;margin-bottom:8px">⚡ What are Supersets?</div>
+      <p style="font-size:13px;color:var(--grey-light);line-height:1.7">
+        Supersets mean doing <strong style="color:var(--gold)">Exercise A → Exercise B</strong> back to back with no rest between them. 
+        Rest only after completing both. This saves time, increases intensity, and gives you a massive pump. 
+        CBum, Arnold, and Dorian Yates all used supersets to build legendary physiques.
+      </p>
+    </div>
+    <h3 style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:16px">TAP A SPLIT TO SEE FULL PLAN</h3>
+    <div id="supersetGrid" class="superset-grid"></div>
+  </section>
+
+  <!-- ===== PLAYLIST ===== -->
+  <section class="tab-section hidden" id="tab-playlist">
+    <div class="section-hero">
+      <h1 class="section-title">GYM<br><span class="gold">PLAYLIST</span></h1>
+      <p class="section-sub">Music that moves iron.</p>
+    </div>
+
+    <div class="playlist-tabs">
+      <button class="pl-tab active" onclick="filterPlaylist('all')">ALL</button>
+      <button class="pl-tab" onclick="filterPlaylist('spiritual')">🙏 SPIRITUAL</button>
+      <button class="pl-tab" onclick="filterPlaylist('bollywood')">🎬 BOLLYWOOD</button>
+      <button class="pl-tab" onclick="filterPlaylist('bass')">🔊 BASS</button>
+      <button class="pl-tab" onclick="filterPlaylist('pump')">🔥 PUMP</button>
+      <button class="pl-tab" onclick="filterPlaylist('english')">🇺🇸 ENGLISH</button>
+    </div>
+
+    <div class="playlist-grid" id="playlistGrid"></div>
+  </section>
+
+  <!-- ===== AI COACH ===== -->
+  <section class="tab-section hidden" id="tab-ai">
+    <div class="section-hero">
+      <h1 class="section-title">AI<br><span class="gold">COACH</span></h1>
+      <p class="section-sub">Powered by old school wisdom. New school AI.</p>
+    </div>
+
+    <div class="ai-quick-btns">
+      <button class="quick-btn" onclick="askAI('Give me a 5-day CBum style PPL workout split for intermediate lifters. Include sets, reps, and key exercises.')">🏆 CBum PPL Split</button>
+      <button class="quick-btn" onclick="askAI('Give me Arnold Schwarzenegger old school chest and back workout routine with sets and reps.')">💪 Arnold Routine</button>
+      <button class="quick-btn" onclick="askAI('Give me Mukesh Gahlot style Indian old school bodybuilding workout and diet tips in Hindi and English mix.')">🇮🇳 Desi Iron</button>
+      <button class="quick-btn" onclick="askAI('Create a beginner gym workout plan for someone who just started. 3 days a week, full body, simple exercises.')">🌱 Beginner Plan</button>
+      <button class="quick-btn" onclick="askAI('Give me the best pre-workout meal and post-workout meal for muscle building. Keep it practical and Indian food friendly.')">🍗 Meal Timing</button>
+      <button class="quick-btn" onclick="askAI('What are the top 5 mistakes beginners make in gym that kill their gains? Explain each with solution.')">❌ Common Mistakes</button>
+    </div>
+
+    <div class="ai-chat card" id="aiChat">
+      <div class="ai-welcome">
+        <div class="ai-avatar">🤖</div>
+        <p>Your AI Coach is ready. Ask anything about training, diet, or recovery. Pick a quick question above or type your own below.</p>
+      </div>
+    </div>
+
+    <div class="ai-input-row">
+      <input type="text" id="aiInput" placeholder="Ask your coach anything..." onkeydown="if(event.key==='Enter') sendAI()" />
+      <button class="btn-primary" onclick="sendAI()">SEND</button>
+    </div>
+  </section>
+
+</div>
+
+<!-- Exercise Detail Modal -->
+<div class="modal-overlay hidden" id="exModal" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
