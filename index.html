@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-tab="library">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,23 +10,71 @@
 </head>
 <body>
 
-<!-- SPLASH -->
+<!-- ===== SPLASH ===== -->
 <div class="splash" id="splash">
-  <div class="splash-logo">
-    <span class="iron">IRON</span><span class="flow">FLOW</span>
-  </div>
+  <div class="splash-logo"><span class="iron">IRON</span><span class="flow">FLOW</span></div>
   <div class="splash-sub">NO EXCUSES. ONLY IRON.</div>
   <div class="splash-bar"><div class="splash-fill"></div></div>
 </div>
 
-<!-- APP -->
-<div class="app" id="app">
+<!-- ===== LOGIN SCREEN ===== -->
+<div class="login-screen hidden" id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">IRON<span>FLOW</span></div>
+    <div class="login-tagline">Your gym. Your data. Your progress.</div>
+    <div class="login-tabs">
+      <button class="ltab active" id="ltabLogin" onclick="showLoginTab('login')">LOGIN</button>
+      <button class="ltab" id="ltabSignup" onclick="showLoginTab('signup')">SIGN UP</button>
+    </div>
+    <!-- Login -->
+    <div id="loginForm">
+      <div class="form-group" style="margin-bottom:12px">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@email.com" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <div class="form-group" style="margin-bottom:20px">
+        <label>Password</label>
+        <input type="password" id="loginPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
+      </div>
+      <button class="btn-primary" onclick="doLogin()">🔓 LOGIN</button>
+      <div id="loginErr" class="auth-err hidden"></div>
+    </div>
+    <!-- Signup -->
+    <div id="signupForm" class="hidden">
+      <div class="form-group" style="margin-bottom:12px">
+        <label>Name</label>
+        <input type="text" id="signupName" placeholder="Tera naam" />
+      </div>
+      <div class="form-group" style="margin-bottom:12px">
+        <label>Email</label>
+        <input type="email" id="signupEmail" placeholder="you@email.com" />
+      </div>
+      <div class="form-group" style="margin-bottom:20px">
+        <label>Password (min 6 chars)</label>
+        <input type="password" id="signupPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doSignup()"/>
+      </div>
+      <button class="btn-primary" onclick="doSignup()">💪 CREATE ACCOUNT</button>
+      <div id="signupErr" class="auth-err hidden"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MAIN APP ===== -->
+<div class="app hidden" id="app">
 
   <!-- HEADER -->
   <header class="header">
     <div class="logo">IRON<span>FLOW</span></div>
-    <div class="header-right">
-      <div class="streak-badge">🔥 <span id="streakCount">0</span> Day Streak</div>
+    <div class="header-right" style="display:flex;align-items:center;gap:10px">
+      <div class="streak-badge">🔥 <span id="streakCount">0</span> Day</div>
+      <div class="user-menu" id="userMenu" onclick="toggleUserMenu()">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="user-dropdown hidden" id="userDropdown">
+          <div class="user-name" id="userNameDisplay">-</div>
+          <div class="user-email-disp" id="userEmailDisplay">-</div>
+          <button class="logout-btn" onclick="doLogout()">🚪 Logout</button>
+        </div>
+      </div>
     </div>
   </header>
 
@@ -58,18 +106,19 @@
       <h1 class="section-title">EXERCISE<br><span class="gold">LIBRARY</span></h1>
       <p class="section-sub">Old school iron. New school results.</p>
     </div>
-
     <div class="body-parts">
-      <button class="part-btn active" onclick="filterPart('all')">ALL</button>
-      <button class="part-btn" onclick="filterPart('chest')">CHEST</button>
-      <button class="part-btn" onclick="filterPart('back')">BACK</button>
-      <button class="part-btn" onclick="filterPart('legs')">LEGS</button>
-      <button class="part-btn" onclick="filterPart('shoulders')">SHOULDERS</button>
-      <button class="part-btn" onclick="filterPart('arms')">ARMS</button>
-      <button class="part-btn" onclick="filterPart('core')">CORE</button>
+      <button class="part-btn active" onclick="filterPart('all',this)">ALL</button>
+      <button class="part-btn" onclick="filterPart('chest',this)">CHEST</button>
+      <button class="part-btn" onclick="filterPart('back',this)">BACK</button>
+      <button class="part-btn" onclick="filterPart('legs',this)">LEGS</button>
+      <button class="part-btn" onclick="filterPart('shoulders',this)">SHOULDERS</button>
+      <button class="part-btn" onclick="filterPart('arms',this)">ARMS</button>
+      <button class="part-btn" onclick="filterPart('core',this)">CORE</button>
+      <button class="part-btn part-btn-custom" onclick="filterPart('custom',this)">⭐ MINE</button>
     </div>
-
     <div class="exercise-grid" id="exerciseGrid"></div>
+    <!-- Floating Add Button -->
+    <button class="fab" onclick="openAddExModal()" title="Add Custom Exercise">+</button>
   </section>
 
   <!-- ===== WORKOUT LOGGER ===== -->
@@ -78,7 +127,6 @@
       <h1 class="section-title">WORKOUT<br><span class="gold">LOG</span></h1>
       <p class="section-sub">Track every rep. Every set. Every kg.</p>
     </div>
-
     <div class="logger-form card">
       <div class="form-row">
         <div class="form-group">
@@ -113,65 +161,44 @@
       </div>
       <button class="btn-primary" onclick="logWorkout()">💪 LOG SET</button>
     </div>
-
-    <!-- Today's Log -->
     <div class="log-section">
       <div class="log-header">
         <h3>TODAY'S SESSION</h3>
-        <div class="calorie-burn" id="calorieBurn">
+        <div class="calorie-burn">
           <span class="burn-num" id="burnNum">0</span>
           <span class="burn-label">kcal burned</span>
         </div>
       </div>
       <div id="calAnalogy" class="cal-analogy hidden"></div>
-      <div id="todayLog" class="today-log"></div>
+      <div id="todayLog"></div>
     </div>
-
-    <!-- History -->
     <div class="log-section">
       <h3>HISTORY</h3>
       <div id="logHistory"></div>
     </div>
   </section>
 
-  <!-- ===== DIET PLAN ===== -->
+  <!-- ===== DIET ===== -->
   <section class="tab-section hidden" id="tab-diet">
     <div class="section-hero">
       <h1 class="section-title">DIET &<br><span class="gold">NUTRITION</span></h1>
       <p class="section-sub">Eat like a champion. Perform like one.</p>
     </div>
-
     <div class="diet-calc card">
       <h3>📊 Calorie Calculator</h3>
       <div class="form-row">
-        <div class="form-group">
-          <label>Weight (kg)</label>
-          <input type="number" id="dietWeight" placeholder="75" />
-        </div>
-        <div class="form-group">
-          <label>Height (cm)</label>
-          <input type="number" id="dietHeight" placeholder="175" />
-        </div>
-        <div class="form-group">
-          <label>Age</label>
-          <input type="number" id="dietAge" placeholder="22" />
-        </div>
+        <div class="form-group"><label>Weight (kg)</label><input type="number" id="dietWeight" placeholder="75" /></div>
+        <div class="form-group"><label>Height (cm)</label><input type="number" id="dietHeight" placeholder="175" /></div>
+        <div class="form-group"><label>Age</label><input type="number" id="dietAge" placeholder="22" /></div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>Gender</label>
-          <select id="dietGender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
+          <select id="dietGender"><option value="male">Male</option><option value="female">Female</option></select>
         </div>
         <div class="form-group">
           <label>Goal</label>
-          <select id="dietGoal">
-            <option value="bulk">💪 Bulk</option>
-            <option value="cut">🔥 Cut</option>
-            <option value="maintain">⚖️ Maintain</option>
-          </select>
+          <select id="dietGoal"><option value="bulk">💪 Bulk</option><option value="cut">🔥 Cut</option><option value="maintain">⚖️ Maintain</option></select>
         </div>
         <div class="form-group">
           <label>Activity</label>
@@ -186,34 +213,30 @@
       </div>
       <button class="btn-primary" onclick="calcDiet()">⚡ CALCULATE</button>
     </div>
-
     <div id="dietResult" class="hidden">
       <div class="macro-cards" id="macroCards"></div>
       <div class="meal-plan card" id="mealPlan"></div>
     </div>
-
-    <!-- Legend Diet Tips -->
     <div class="legends-section">
       <h3 class="gold-title">LEGEND PRINCIPLES</h3>
       <div class="legend-cards" id="legendCards"></div>
     </div>
   </section>
 
-  <!-- ===== SUPERSETS / DOUBLE BODY SPLITS ===== -->
+  <!-- ===== SUPERSETS ===== -->
   <section class="tab-section hidden" id="tab-supersets">
     <div class="section-hero">
       <h1 class="section-title">DOUBLE<br><span class="gold">SPLITS</span></h1>
       <p class="section-sub">Two muscle groups. One savage session. Zero excuses.</p>
     </div>
     <div class="ss-intro card">
-      <div style="font-size:24px;margin-bottom:8px">⚡ What are Supersets?</div>
-      <p style="font-size:13px;color:var(--grey-light);line-height:1.7">
-        Supersets mean doing <strong style="color:var(--gold)">Exercise A → Exercise B</strong> back to back with no rest between them. 
-        Rest only after completing both. This saves time, increases intensity, and gives you a massive pump. 
-        CBum, Arnold, and Dorian Yates all used supersets to build legendary physiques.
+      <div style="font-size:22px;margin-bottom:8px">⚡ What are Supersets?</div>
+      <p style="font-size:13px;color:var(--grey-lt);line-height:1.7">
+        Do <strong style="color:var(--gold)">Exercise A → Exercise B</strong> back to back, no rest between them.
+        Rest only after both. CBum, Arnold, Dorian Yates — all used supersets to build legendary physiques.
       </p>
     </div>
-    <h3 style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:16px">TAP A SPLIT TO SEE FULL PLAN</h3>
+    <h3 style="font-family:var(--font-d);font-size:20px;letter-spacing:2px;color:var(--gold);margin-bottom:16px">TAP TO SEE FULL PLAN</h3>
     <div id="supersetGrid" class="superset-grid"></div>
   </section>
 
@@ -223,16 +246,14 @@
       <h1 class="section-title">GYM<br><span class="gold">PLAYLIST</span></h1>
       <p class="section-sub">Music that moves iron.</p>
     </div>
-
     <div class="playlist-tabs">
-      <button class="pl-tab active" onclick="filterPlaylist('all')">ALL</button>
-      <button class="pl-tab" onclick="filterPlaylist('spiritual')">🙏 SPIRITUAL</button>
-      <button class="pl-tab" onclick="filterPlaylist('bollywood')">🎬 BOLLYWOOD</button>
-      <button class="pl-tab" onclick="filterPlaylist('bass')">🔊 BASS</button>
-      <button class="pl-tab" onclick="filterPlaylist('pump')">🔥 PUMP</button>
-      <button class="pl-tab" onclick="filterPlaylist('english')">🇺🇸 ENGLISH</button>
+      <button class="pl-tab active" onclick="filterPlaylist('all',this)">ALL</button>
+      <button class="pl-tab" onclick="filterPlaylist('spiritual',this)">🙏 SPIRITUAL</button>
+      <button class="pl-tab" onclick="filterPlaylist('bollywood',this)">🎬 BOLLYWOOD</button>
+      <button class="pl-tab" onclick="filterPlaylist('bass',this)">🔊 BASS</button>
+      <button class="pl-tab" onclick="filterPlaylist('pump',this)">🔥 PUMP</button>
+      <button class="pl-tab" onclick="filterPlaylist('english',this)">🇺🇸 ENGLISH</button>
     </div>
-
     <div class="playlist-grid" id="playlistGrid"></div>
   </section>
 
@@ -242,7 +263,6 @@
       <h1 class="section-title">AI<br><span class="gold">COACH</span></h1>
       <p class="section-sub">Powered by old school wisdom. New school AI.</p>
     </div>
-
     <div class="ai-quick-btns">
       <button class="quick-btn" onclick="askAI('Give me a 5-day CBum style PPL workout split for intermediate lifters. Include sets, reps, and key exercises.')">🏆 CBum PPL Split</button>
       <button class="quick-btn" onclick="askAI('Give me Arnold Schwarzenegger old school chest and back workout routine with sets and reps.')">💪 Arnold Routine</button>
@@ -251,27 +271,75 @@
       <button class="quick-btn" onclick="askAI('Give me the best pre-workout meal and post-workout meal for muscle building. Keep it practical and Indian food friendly.')">🍗 Meal Timing</button>
       <button class="quick-btn" onclick="askAI('What are the top 5 mistakes beginners make in gym that kill their gains? Explain each with solution.')">❌ Common Mistakes</button>
     </div>
-
     <div class="ai-chat card" id="aiChat">
       <div class="ai-welcome">
         <div class="ai-avatar">🤖</div>
-        <p>Your AI Coach is ready. Ask anything about training, diet, or recovery. Pick a quick question above or type your own below.</p>
+        <p>Your AI Coach is ready. Ask anything about training, diet, or recovery.</p>
       </div>
     </div>
-
     <div class="ai-input-row">
-      <input type="text" id="aiInput" placeholder="Ask your coach anything..." onkeydown="if(event.key==='Enter') sendAI()" />
+      <input type="text" id="aiInput" placeholder="Ask your coach anything..." onkeydown="if(event.key==='Enter')sendAI()" />
       <button class="btn-primary" onclick="sendAI()">SEND</button>
     </div>
   </section>
 
-</div>
+</div><!-- end .app -->
 
-<!-- Exercise Detail Modal -->
+<!-- ===== EXERCISE DETAIL MODAL ===== -->
 <div class="modal-overlay hidden" id="exModal" onclick="closeModal()">
   <div class="modal-box" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ===== ADD CUSTOM EXERCISE MODAL ===== -->
+<div class="modal-overlay hidden" id="addExModal" onclick="closeAddExModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeAddExModal()">✕</button>
+    <div style="font-size:36px;text-align:center;margin-bottom:12px">➕</div>
+    <div style="font-family:var(--font-d);font-size:24px;letter-spacing:2px;color:var(--white);margin-bottom:4px">ADD EXERCISE</div>
+    <div style="font-size:12px;color:var(--grey);margin-bottom:20px">Apni custom exercise add karo — yahan save rahegi!</div>
+
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Exercise Name *</label>
+      <input type="text" id="cexName" placeholder="e.g. Cable Lateral Raise" />
+    </div>
+    <div class="form-row" style="margin-bottom:12px">
+      <div class="form-group">
+        <label>Body Part *</label>
+        <select id="cexPart">
+          <option value="chest">Chest</option>
+          <option value="back">Back</option>
+          <option value="legs">Legs</option>
+          <option value="shoulders">Shoulders</option>
+          <option value="arms">Arms</option>
+          <option value="core">Core</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Difficulty</label>
+        <select id="cexDiff">
+          <option value="BEGINNER">Beginner</option>
+          <option value="INTERMEDIATE">Intermediate</option>
+          <option value="ADVANCED">Advanced</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Sets & Reps (e.g. 4x12)</label>
+      <input type="text" id="cexSets" placeholder="4x12, 3x15" />
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label>Form Tips (ek ek line mein)</label>
+      <textarea id="cexTips" placeholder="Tip 1&#10;Tip 2&#10;Tip 3" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font-b);font-size:14px;padding:10px 12px;outline:none;width:100%;min-height:80px;resize:vertical;"></textarea>
+    </div>
+    <div class="form-group" style="margin-bottom:20px">
+      <label>Your Note / Legend Quote</label>
+      <input type="text" id="cexLegend" placeholder="Apna tip ya quote likho..." />
+    </div>
+    <button class="btn-primary" onclick="saveCustomEx()">💾 SAVE EXERCISE</button>
+    <div id="cexErr" class="auth-err hidden" style="margin-top:10px"></div>
   </div>
 </div>
 

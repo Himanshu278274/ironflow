@@ -434,6 +434,113 @@ body {
 .ss-desc { font-size: 12px; color: var(--grey); line-height: 1.4; }
 .ss-intro { border-color: var(--gold) !important; }
 
+/* ===== LOGIN SCREEN ===== */
+.login-screen {
+  position: fixed; inset: 0; z-index: 500;
+  background: #000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.login-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  width: 100%; max-width: 380px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+}
+.login-logo {
+  font-family: var(--font-d);
+  font-size: 42px; letter-spacing: 4px;
+  color: var(--white); text-align: center; margin-bottom: 4px;
+}
+.login-logo span { color: var(--red); }
+.login-tagline {
+  font-size: 12px; color: var(--grey);
+  text-align: center; letter-spacing: 1px;
+  font-family: var(--font-c); text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.login-tabs {
+  display: flex; gap: 0; margin-bottom: 24px;
+  background: var(--surface2); border-radius: 8px; padding: 4px;
+}
+.ltab {
+  flex: 1; border: none; background: none;
+  color: var(--grey); font-family: var(--font-d);
+  font-size: 16px; letter-spacing: 2px;
+  padding: 10px; border-radius: 6px; cursor: pointer;
+  transition: all 0.2s;
+}
+.ltab.active {
+  background: var(--red); color: #fff;
+}
+.auth-err {
+  background: #2A0008; border: 1px solid var(--red-dim);
+  border-radius: 8px; padding: 10px 14px;
+  font-size: 13px; color: #FF6677;
+  margin-top: 10px;
+}
+
+/* ===== USER MENU ===== */
+.user-menu { position: relative; cursor: pointer; }
+.user-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--red); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-d); font-size: 18px; letter-spacing: 1px;
+  border: 2px solid var(--red-dim);
+}
+.user-dropdown {
+  position: absolute; top: 44px; right: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+  min-width: 180px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+  z-index: 200;
+}
+.user-name {
+  font-family: var(--font-c); font-size: 16px; font-weight: 700;
+  color: var(--white); margin-bottom: 2px;
+}
+.user-email-disp { font-size: 11px; color: var(--grey); margin-bottom: 12px; }
+.logout-btn {
+  width: 100%; background: var(--surface2);
+  border: 1px solid var(--border); border-radius: 8px;
+  color: var(--grey-lt); font-family: var(--font-c);
+  font-size: 14px; font-weight: 600; padding: 8px;
+  cursor: pointer; transition: all 0.2s;
+}
+.logout-btn:hover { border-color: var(--red); color: var(--red); }
+
+/* ===== FAB (Floating Add Button) ===== */
+.fab {
+  position: fixed; bottom: 88px; right: 20px;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: var(--red); color: #fff; border: none;
+  font-size: 28px; font-weight: 300;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 90;
+  box-shadow: 0 4px 20px rgba(232,20,42,0.5);
+  transition: all 0.2s;
+}
+.fab:hover { background: #FF1A30; transform: scale(1.1); }
+
+/* ===== CUSTOM EXERCISE BADGE ===== */
+.ex-card.custom-ex { border-color: var(--gold-dim); }
+.ex-card.custom-ex .ex-card-part { color: var(--gold); }
+.custom-badge {
+  position: absolute; top: 8px; left: 8px;
+  background: var(--gold-dim); color: var(--gold);
+  font-size: 9px; font-family: var(--font-c); font-weight: 700;
+  padding: 2px 6px; border-radius: 4px; letter-spacing: 1px;
+}
+.part-btn-custom { border-color: var(--gold-dim) !important; color: var(--gold) !important; }
+.part-btn-custom.active, .part-btn-custom:hover {
+  background: var(--gold) !important; color: #000 !important; border-color: var(--gold) !important;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 480px) {
   .form-row { flex-direction: column; }

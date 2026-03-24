@@ -293,29 +293,171 @@ const CAL_ANALOGIES = [
 ];
 
 // ===== STATE =====
-let workoutLog = JSON.parse(localStorage.getItem('if_log') || '[]');
-let streak = parseInt(localStorage.getItem('if_streak') || '0');
-let lastWorkoutDate = localStorage.getItem('if_lastdate') || '';
+let currentUser = null;
+let workoutLog = [];
+let streak = 0;
+let lastWorkoutDate = '';
+let customExercises = [];
+
+function uKey(k) {
+  const uid = currentUser ? currentUser.uid : 'guest';
+  return 'if_' + uid + '_' + k;
+}
 
 // ===== SAVE =====
 function save() {
-  localStorage.setItem('if_log', JSON.stringify(workoutLog));
-  localStorage.setItem('if_streak', streak);
-  localStorage.setItem('if_lastdate', lastWorkoutDate);
+  localStorage.setItem(uKey('log'), JSON.stringify(workoutLog));
+  localStorage.setItem(uKey('streak'), streak);
+  localStorage.setItem(uKey('lastdate'), lastWorkoutDate);
+  localStorage.setItem(uKey('customex'), JSON.stringify(customExercises));
 }
 
-// ===== SPLASH =====
-window.addEventListener('load', () => {
+function loadUserData() {
+  workoutLog      = JSON.parse(localStorage.getItem(uKey('log'))      || '[]');
+  streak          = parseInt(localStorage.getItem(uKey('streak'))     || '0');
+  lastWorkoutDate = localStorage.getItem(uKey('lastdate'))            || '';
+  customExercises = JSON.parse(localStorage.getItem(uKey('customex')) || '[]');
+}
+
+// ===== AUTH =====
+function hashPass(p) {
+  let h = 0;
+  for (let i = 0; i < p.length; i++) { h = ((h << 5) - h) + p.charCodeAt(i); h |= 0; }
+  return h.toString(36);
+}
+function getAllUsers() { return JSON.parse(localStorage.getItem('if_users') || '[]'); }
+function saveAllUsers(u) { localStorage.setItem('if_users', JSON.stringify(u)); }
+
+function showLoginTab(tab) {
+  document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
+  document.getElementById('signupForm').classList.toggle('hidden', tab !== 'signup');
+  document.getElementById('ltabLogin').classList.toggle('active', tab === 'login');
+  document.getElementById('ltabSignup').classList.toggle('active', tab === 'signup');
+}
+
+function doSignup() {
+  const name  = document.getElementById('signupName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim().toLowerCase();
+  const pass  = document.getElementById('signupPass').value;
+  const err   = document.getElementById('signupErr');
+  if (!name || !email || !pass) { showErr(err,'Sab fields fill karo!'); return; }
+  if (pass.length < 6)          { showErr(err,'Password min 6 chars chahiye!'); return; }
+  if (!email.includes('@'))     { showErr(err,'Valid email daalo!'); return; }
+  const users = getAllUsers();
+  if (users.find(u => u.email === email)) { showErr(err,'Email pehle se registered! Login karo.'); return; }
+  const uid = 'u_' + Date.now();
+  users.push({ uid, name, email, pass: hashPass(pass) });
+  saveAllUsers(users);
+  err.classList.add('hidden');
+  loginUser({ uid, name, email });
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const pass  = document.getElementById('loginPass').value;
+  const err   = document.getElementById('loginErr');
+  if (!email || !pass) { showErr(err,'Email aur password daalo!'); return; }
+  const user = getAllUsers().find(u => u.email === email && u.pass === hashPass(pass));
+  if (!user) { showErr(err,'Email ya password galat hai!'); return; }
+  err.classList.add('hidden');
+  loginUser(user);
+}
+
+function showErr(el, msg) { el.textContent = msg; el.classList.remove('hidden'); }
+
+function loginUser(user) {
+  currentUser = user;
+  localStorage.setItem('if_session', JSON.stringify(user));
+  loadUserData();
+  startApp();
+}
+
+function doLogout() {
+  currentUser = null;
+  localStorage.removeItem('if_session');
+  location.reload();
+}
+
+function toggleUserMenu() {
+  document.getElementById('userDropdown').classList.toggle('hidden');
+}
+document.addEventListener('click', (e) => {
+  const menu = document.getElementById('userMenu');
+  if (menu && !menu.contains(e.target)) {
+    document.getElementById('userDropdown')?.classList.add('hidden');
+  }
+});
+
+function startApp() {
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  const initial = currentUser.name ? currentUser.name[0].toUpperCase() : '?';
+  document.getElementById('userAvatar').textContent = initial;
+  document.getElementById('userNameDisplay').textContent = currentUser.name || '-';
+  document.getElementById('userEmailDisplay').textContent = currentUser.email || '-';
   document.getElementById('streakCount').textContent = streak;
   renderExercises('all');
   renderLog();
   renderLegends();
   renderPlaylist('all');
   renderSupersets();
+}
+
+// ===== CUSTOM EXERCISE =====
+function openAddExModal() { document.getElementById('addExModal').classList.remove('hidden'); }
+function closeAddExModal() {
+  document.getElementById('addExModal').classList.add('hidden');
+  ['cexName','cexSets','cexTips','cexLegend'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('cexErr').classList.add('hidden');
+}
+
+function saveCustomEx() {
+  const name    = document.getElementById('cexName').value.trim();
+  const part    = document.getElementById('cexPart').value;
+  const diff    = document.getElementById('cexDiff').value;
+  const setsRaw = document.getElementById('cexSets').value.trim();
+  const tipsRaw = document.getElementById('cexTips').value.trim();
+  const legend  = document.getElementById('cexLegend').value.trim();
+  const err     = document.getElementById('cexErr');
+  if (!name) { err.textContent = 'Exercise naam toh daalo!'; err.classList.remove('hidden'); return; }
+  const sets = setsRaw ? setsRaw.split(',').map(s=>s.trim()).filter(Boolean) : ['3x12'];
+  const tips = tipsRaw ? tipsRaw.split('\n').map(s=>s.trim()).filter(Boolean) : ['Focus on form'];
+  customExercises.unshift({ id:'c_'+Date.now(), name, part, diff, emoji:'⭐', legend:legend||'Your exercise!', sets, tips, isCustom:true });
+  save();
+  closeAddExModal();
+  renderExercises('all');
+  showToast('\u2705 "' + name + '" saved!');
+}
+
+function deleteCustomEx(id) {
+  customExercises = customExercises.filter(e => e.id !== id);
+  save(); renderExercises('all'); closeModal();
+  showToast('\uD83D\uDDD1 Exercise deleted');
+}
+
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--gold);border-radius:8px;padding:10px 18px;font-family:var(--font-c);font-size:14px;font-weight:700;color:var(--gold);z-index:500;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.5)';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+
+// ===== SPLASH =====
+window.addEventListener('load', () => {
   setTimeout(() => {
     const sp = document.getElementById('splash');
     sp.classList.add('out');
-    setTimeout(() => sp.style.display = 'none', 700);
+    setTimeout(() => {
+      sp.style.display = 'none';
+      const saved = localStorage.getItem('if_session');
+      if (saved) {
+        try { currentUser = JSON.parse(saved); loadUserData(); startApp(); }
+        catch(e) { document.getElementById('loginScreen').classList.remove('hidden'); }
+      } else {
+        document.getElementById('loginScreen').classList.remove('hidden');
+      }
+    }, 700);
   }, 2000);
 });
 
@@ -330,20 +472,32 @@ function switchTab(tab) {
 // ===== EXERCISE LIBRARY =====
 let currentPart = 'all';
 
-function filterPart(part) {
+function filterPart(part, btn) {
   currentPart = part;
   document.querySelectorAll('.part-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
   renderExercises(part);
 }
 
 function renderExercises(part) {
   const grid = document.getElementById('exerciseGrid');
-  const filtered = part === 'all' ? EXERCISES : EXERCISES.filter(e => e.part === part);
+  // Combine built-in + custom exercises
+  const allEx = [...EXERCISES, ...(customExercises || [])];
+  let filtered;
+  if (part === 'all')     filtered = allEx;
+  else if (part === 'custom') filtered = customExercises || [];
+  else filtered = allEx.filter(e => e.part === part);
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--grey);font-size:14px">Koi exercise nahi mili. + button se apni add karo! ⭐</div>';
+    return;
+  }
+
   grid.innerHTML = filtered.map(ex => `
-    <div class="ex-card" onclick="openModal(${ex.id})">
+    <div class="ex-card ${ex.isCustom ? 'custom-ex' : ''}" onclick="openModal('${ex.id}')">
       <div class="ex-card-emoji">${ex.emoji}</div>
       <div class="ex-card-diff">${ex.diff}</div>
+      ${ex.isCustom ? '<div class="custom-badge">MINE</div>' : ''}
       <div class="ex-card-body">
         <div class="ex-card-name">${ex.name}</div>
         <div class="ex-card-part">${ex.part.toUpperCase()}</div>
@@ -353,7 +507,9 @@ function renderExercises(part) {
 }
 
 function openModal(id) {
-  const ex = EXERCISES.find(e => e.id === id);
+  // Find in both built-in and custom
+  const allEx = [...EXERCISES, ...(customExercises || [])];
+  const ex = allEx.find(e => String(e.id) === String(id));
   if (!ex) return;
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-ex-emoji">${ex.emoji}</div>
@@ -362,13 +518,14 @@ function openModal(id) {
     <div class="modal-legend">💬 "${ex.legend}"</div>
     <div class="modal-section-title">Recommended Sets & Reps</div>
     <div class="modal-sets">
-      ${ex.sets.map(s => `<span class="set-pill">${s}</span>`).join('')}
+      ${ex.sets.map(s => '<span class="set-pill">' + s + '</span>').join('')}
     </div>
     <div class="modal-section-title">Form Tips</div>
     <ul class="modal-tips">
-      ${ex.tips.map(t => `<li>${t}</li>`).join('')}
+      ${ex.tips.map(t => '<li>' + t + '</li>').join('')}
     </ul>
     <button class="btn-primary" style="margin-top:20px" onclick="prefillLog('${ex.name}','${ex.part}');closeModal()">📝 Log This Exercise</button>
+    ${ex.isCustom ? '<button class="btn-primary" style="margin-top:8px;background:var(--surface2);color:var(--red);border:1px solid var(--red)" onclick="deleteCustomEx(\'' + ex.id + '\')">🗑 Delete This Exercise</button>' : ''}
   `;
   document.getElementById('exModal').classList.remove('hidden');
 }
@@ -597,9 +754,9 @@ function renderLegends() {
 }
 
 // ===== PLAYLIST =====
-function filterPlaylist(filter) {
+function filterPlaylist(filter, btn) {
   document.querySelectorAll('.pl-tab').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
   renderPlaylist(filter);
 }
 
