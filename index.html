@@ -66,6 +66,11 @@
   <header class="header">
     <div class="logo">IRON<span>FLOW</span></div>
     <div class="header-right" style="display:flex;align-items:center;gap:10px">
+      <div class="theme-switcher">
+        <div class="theme-dot theme-dot-dark active" id="td-dark" onclick="setTheme('dark')" title="Dark"></div>
+        <div class="theme-dot theme-dot-white" id="td-white" onclick="setTheme('white')" title="Light"></div>
+        <div class="theme-dot theme-dot-blue" id="td-blue" onclick="setTheme('blue')" title="Blue"></div>
+      </div>
       <div class="streak-badge">🔥 <span id="streakCount">0</span> Day</div>
       <div class="user-menu" id="userMenu" onclick="toggleUserMenu()">
         <div class="user-avatar" id="userAvatar">?</div>
@@ -94,6 +99,9 @@
     </button>
     <button class="nav-btn" data-tab="playlist" onclick="switchTab('playlist')">
       <span class="nav-icon">🎵</span><span>Music</span>
+    </button>
+    <button class="nav-btn" data-tab="female" onclick="switchTab('female')">
+      <span class="nav-icon">👩</span><span>Women</span>
     </button>
     <button class="nav-btn" data-tab="ai" onclick="switchTab('ai')">
       <span class="nav-icon">🤖</span><span>Coach</span>
@@ -255,6 +263,39 @@
       <button class="pl-tab" onclick="filterPlaylist('english',this)">🇺🇸 ENGLISH</button>
     </div>
     <div class="playlist-grid" id="playlistGrid"></div>
+  </section>
+
+  <!-- ===== FEMALE SECTION ===== -->
+  <section class="tab-section hidden" id="tab-female">
+    <div class="section-hero" style="background:linear-gradient(135deg,#1a0010,#0a0a0a);margin:-0px;padding:24px 20px 18px;border-bottom:1px solid #3a1a2a">
+      <h1 class="section-title" style="color:var(--white)">WOMEN'S<br><span style="color:#E8609A">ZONE</span></h1>
+      <p class="section-sub">Train smart. Get strong. Look amazing. 💪</p>
+    </div>
+
+    <!-- Female Body Part Filter -->
+    <div class="body-parts" style="margin-top:16px">
+      <button class="part-btn female-part-btn active" onclick="filterFemalePart('all',this)">ALL</button>
+      <button class="part-btn female-part-btn" onclick="filterFemalePart('glutes',this)">🍑 GLUTES</button>
+      <button class="part-btn female-part-btn" onclick="filterFemalePart('legs',this)">🦵 LEGS</button>
+      <button class="part-btn female-part-btn" onclick="filterFemalePart('arms',this)">💪 ARMS</button>
+      <button class="part-btn female-part-btn" onclick="filterFemalePart('shoulders',this)">✈️ SHOULDERS</button>
+      <button class="part-btn female-part-btn" onclick="filterFemalePart('core',this)">🫀 CORE</button>
+      <button class="part-btn female-part-btn" onclick="filterFemalePart('back',this)">🔙 BACK</button>
+    </div>
+
+    <div class="exercise-grid" id="femaleExGrid"></div>
+
+    <!-- Diet Tips -->
+    <div style="margin-top:28px">
+      <h3 style="font-family:var(--font-d);font-size:22px;letter-spacing:2px;color:#E8609A;margin-bottom:16px">NUTRITION TIPS</h3>
+      <div id="femaleDietTips"></div>
+    </div>
+
+    <!-- Female Legends -->
+    <div style="margin-top:8px">
+      <h3 style="font-family:var(--font-d);font-size:22px;letter-spacing:2px;color:#E8609A;margin-bottom:16px">LEGEND ADVICE</h3>
+      <div id="femaleLegends" class="legend-cards"></div>
+    </div>
   </section>
 
   <!-- ===== AI COACH ===== -->

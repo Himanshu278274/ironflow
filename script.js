@@ -153,82 +153,84 @@ const EXERCISES = [
 const SUPERSETS = [
   {
     name:"Chest + Triceps (Push Day)",
-    icon:"💥",
-    color:"#CC0000",
-    level:"INTERMEDIATE",
-    desc:"Classic push combo. Train chest first when fresh, triceps get secondary stimulus. Then finish triceps directly.",
+    icon:"💥", color:"#E8142A", level:"INTERMEDIATE",
+    desc:"Classic CBum push day — 4-5 chest exercises followed by 3-4 tricep movements. Chest first when fresh, triceps finish the job.",
+    totalTime:"75-90 min",
     pairs:[
-      { a:"Bench Press 4x8-12", b:"Tricep Pushdown 4x12-15", rest:"60s between pairs" },
-      { a:"Incline DB Press 3x10-12", b:"Skull Crushers 3x10", rest:"60s between pairs" },
-      { a:"Cable Flyes 3x15", b:"Overhead Tricep Extension 3x12", rest:"45s between pairs" },
+      { label:"CHEST — COMPOUND", a:"Flat Bench Press", aSets:"4x8-12", b:"Incline DB Press", bSets:"4x10-12", rest:"75s", note:"Heavy compound first — this is your mass builder." },
+      { label:"CHEST — UPPER & MID", a:"Incline Barbell Press", aSets:"3x10", b:"Cable Chest Fly (Mid)", bSets:"3x15", rest:"60s", note:"Stretch and squeeze — feel every rep." },
+      { label:"CHEST — ISOLATION", a:"Pec Deck / Machine Fly", aSets:"3x12-15", b:"Decline Dumbbell Press", bSets:"3x10-12", rest:"60s", note:"Full chest coverage — upper to lower." },
+      { label:"TRICEPS — MASS", a:"Skull Crushers (EZ Bar)", aSets:"4x10-12", b:"Close Grip Bench Press", bSets:"3x10", rest:"60s", note:"Heaviest tricep movements — do these fresh." },
+      { label:"TRICEPS — ISOLATION", a:"Cable Tricep Pushdown", aSets:"3x12-15", b:"Overhead Tricep Extension", bSets:"3x12", rest:"45s", note:"Full extension every rep. Squeeze the horseshoe." },
     ],
-    tip:"CBum does this exact split every Push day. Your triceps are pre-fatigued after bench — they grow insane."
+    tip:"CBum's exact push day structure — chest compounds, then fly movements, finish with heavy triceps. Never skip the overhead extension."
   },
   {
     name:"Back + Biceps (Pull Day)",
-    icon:"🔄",
-    color:"#C9A84C",
-    level:"INTERMEDIATE",
-    desc:"The classic pull combo. Pull the weight with your back first, finish biceps when back is done.",
+    icon:"🔄", color:"#C8982E", level:"INTERMEDIATE",
+    desc:"Dorian Yates approved pull day — 4-5 back movements for width and thickness, 3-4 bicep finishers.",
+    totalTime:"75-90 min",
     pairs:[
-      { a:"Deadlift 4x5", b:"Barbell Curl 4x10", rest:"90s between pairs" },
-      { a:"Lat Pulldown 4x12", b:"Hammer Curl 3x12", rest:"60s between pairs" },
-      { a:"Seated Cable Row 3x12", b:"Concentration Curl 3x10 each", rest:"45s between pairs" },
+      { label:"BACK — THICKNESS", a:"Deadlift", aSets:"4x5-6", b:"Barbell Row (Bent Over)", bSets:"4x8-10", rest:"90s", note:"The two kings of back mass. Go heavy, brace hard." },
+      { label:"BACK — WIDTH", a:"Pull-Ups (Weighted)", aSets:"4x8-10", b:"Lat Pulldown (Wide Grip)", bSets:"3x12", rest:"60s", note:"Pull-ups build the V-taper nothing else can match." },
+      { label:"BACK — DETAIL", a:"Seated Cable Row", aSets:"3x12", b:"Single Arm DB Row", bSets:"3x12 each", rest:"60s", note:"Row elbows to hip — not to shoulder. Feel the lat." },
+      { label:"BICEPS — MASS", a:"Barbell Curl (Standing)", aSets:"4x8-10", b:"Incline DB Curl", bSets:"3x12", rest:"60s", note:"No swinging. Strict form = better peak." },
+      { label:"BICEPS — PEAK", a:"Concentration Curl", aSets:"3x12 each", b:"Hammer Curl", bSets:"3x12", rest:"45s", note:"Concentration curl for the peak, hammer for thickness." },
     ],
-    tip:"Dorian Yates' signature approach. Back is King — curl as finisher. Biceps get a killer pump from rowing."
+    tip:"Pull the bar with your elbows, not your hands. This mental cue activates the lats 40% more. Dorian's biggest secret."
+  },
+  {
+    name:"Shoulders (Full 3D Delts)",
+    icon:"✈️", color:"#4488CC", level:"INTERMEDIATE",
+    desc:"Complete shoulder destruction — front, side, and rear delts. CBum-style 3D boulder shoulders.",
+    totalTime:"60-75 min",
+    pairs:[
+      { label:"FRONT DELTS — PRESS", a:"Seated Dumbbell Overhead Press", aSets:"4x8-12", b:"Arnold Press", bSets:"3x12", rest:"75s", note:"Arnold Press hits all 3 delt heads in one move." },
+      { label:"SIDE DELTS — RAISES", a:"Lateral Raises (DB)", aSets:"5x15-20", b:"Cable Lateral Raise", bSets:"3x15-20", rest:"45s", note:"CBum does 6 sets of laterals. This is his signature." },
+      { label:"REAR DELTS", a:"Rear Delt Fly (Bent Over)", aSets:"4x15-20", b:"Face Pulls (Cable)", bSets:"4x15-20", rest:"45s", note:"Most skipped muscles. These complete the 3D look." },
+      { label:"TRAPS", a:"Barbell Shrug", aSets:"4x12-15", b:"Upright Row", bSets:"3x12", rest:"60s", note:"Traps frame the entire upper body. Never skip them." },
+    ],
+    tip:"Lateral raises are the secret to wide shoulders. Use light weight — feel the burn at the side delt, not the trap."
+  },
+  {
+    name:"Legs (Quads + Hamstrings)",
+    icon:"🦵", color:"#AA4444", level:"ADVANCED",
+    desc:"Tom Platz would be proud. Full quad and hamstring annihilation — no leg day excuses.",
+    totalTime:"90-100 min",
+    pairs:[
+      { label:"QUADS — COMPOUND", a:"Barbell Squat", aSets:"5x5-8", b:"Hack Squat", bSets:"4x10-12", rest:"90s", note:"Squat is king. Break parallel every rep, no excuses." },
+      { label:"HAMSTRINGS — COMPOUND", a:"Romanian Deadlift", aSets:"4x10-12", b:"Leg Press (Feet High)", bSets:"4x12-15", rest:"75s", note:"RDL — push hips back, feel hamstring stretch. Slow eccentric." },
+      { label:"QUADS — ISOLATION", a:"Leg Extension", aSets:"4x15-20", b:"Bulgarian Split Squat", bSets:"3x10 each", rest:"60s", note:"Leg extension for teardrop shape. Split squat for symmetry." },
+      { label:"HAMSTRINGS — ISOLATION", a:"Lying Leg Curl", aSets:"4x12-15", b:"Seated Leg Curl", bSets:"3x15", rest:"60s", note:"Both machines hit hamstrings differently. Do both." },
+      { label:"CALVES", a:"Standing Calf Raise", aSets:"5x20-25", b:"Seated Calf Raise", bSets:"4x20", rest:"45s", note:"Arnold trained calves daily. Full ROM every rep." },
+    ],
+    tip:"Never skip legs. Legs produce the most testosterone and growth hormone. Your upper body grows faster when you train legs hard."
   },
   {
     name:"Chest + Back (Antagonist)",
-    icon:"⚔️",
-    color:"#4488CC",
-    level:"ADVANCED",
-    desc:"Advanced technique. Opposing muscles — while chest rests, you train back. Maximum efficiency.",
+    icon:"⚔️", color:"#6644CC", level:"ADVANCED",
+    desc:"Arnold's favorite — opposing muscles trained together. While chest rests, back works. Maximum efficiency and pump.",
+    totalTime:"70-80 min",
     pairs:[
-      { a:"Bench Press 4x8", b:"Barbell Row 4x8", rest:"60s between pairs" },
-      { a:"Incline DB Press 3x10", b:"Pull-Ups 3x10", rest:"60s between pairs" },
-      { a:"Pec Deck 3x15", b:"Straight Arm Pulldown 3x15", rest:"45s between pairs" },
+      { label:"COMPOUND PUSH/PULL", a:"Flat Bench Press", aSets:"4x8", b:"Barbell Row", bSets:"4x8", rest:"60s between pairs", note:"No rest between A and B. Only rest after both done." },
+      { label:"UPPER CHEST / WIDTH", a:"Incline DB Press", aSets:"3x10", b:"Pull-Ups", bSets:"3x10", rest:"60s between pairs", note:"Chest stretch into back width — complete upper body." },
+      { label:"ISOLATION PAIR", a:"Cable Fly (Mid)", aSets:"3x15", b:"Lat Pulldown", bSets:"3x12", rest:"45s between pairs", note:"Feel the squeeze. Each muscle fully isolated here." },
+      { label:"FINISH STRONG", a:"Pec Deck", aSets:"3x15", b:"Seated Cable Row", bSets:"3x12", rest:"45s between pairs", note:"Pump finisher. Both muscles fully exhausted." },
     ],
-    tip:"Arnold himself trained chest and back together. The opposing stretch actually helps each muscle contract better."
+    tip:"The opposing muscle stretch actually helps the working muscle contract harder. Arnold proved this in the 70s — science confirmed it later."
   },
   {
-    name:"Shoulders + Arms",
-    icon:"💪",
-    color:"#44AA66",
-    level:"INTERMEDIATE",
-    desc:"Full upper arm day. Shoulders first for compound work, then pump those arms till they burst.",
+    name:"Arms Hypertrophy Day",
+    icon:"💪", color:"#44AA66", level:"BEGINNER",
+    desc:"Pure arm day for maximum size. Biceps and triceps alternated for constant pump and blood flow.",
+    totalTime:"60 min",
     pairs:[
-      { a:"Overhead Press 4x8-10", b:"Barbell Curl 4x10", rest:"60s between pairs" },
-      { a:"Lateral Raises 4x15", b:"Tricep Pushdown 4x15", rest:"45s between pairs" },
-      { a:"Arnold Press 3x12", b:"Hammer Curl 3x12", rest:"45s between pairs" },
+      { label:"TRICEPS MASS", a:"Close Grip Bench Press", aSets:"4x8-10", b:"Skull Crushers", bSets:"4x10", rest:"60s", note:"Triceps = 2/3 of arm size. Start with heaviest moves." },
+      { label:"BICEPS MASS", a:"Barbell Curl", aSets:"4x8-10", b:"Incline DB Curl", bSets:"3x12", rest:"60s", note:"Incline curl gives maximum stretch for peak development." },
+      { label:"TRICEPS ISOLATION", a:"Cable Pushdown (Rope)", aSets:"4x12-15", b:"Overhead Extension", bSets:"3x12", rest:"45s", note:"Rope pushdown hits all three tricep heads. Spread rope at bottom." },
+      { label:"BICEPS ISOLATION", a:"Hammer Curl", aSets:"3x12", b:"Concentration Curl", aSets:"3x12 each", rest:"45s", note:"Hammer = brachialis thickness. Concentration = peak height." },
     ],
-    tip:"CBum smashes shoulders then pumps arms. You'll walk out looking twice your size. Best for arm days."
-  },
-  {
-    name:"Quads + Hamstrings (Legs)",
-    icon:"🦵",
-    color:"#AA4444",
-    level:"ADVANCED",
-    desc:"Complete leg annihilation. Quads and hamstrings alternated — legs will be dead by the end.",
-    pairs:[
-      { a:"Squat 4x8-10", b:"Romanian Deadlift 4x10", rest:"90s between pairs" },
-      { a:"Leg Press 4x15", b:"Leg Curl 4x12", rest:"60s between pairs" },
-      { a:"Leg Extension 3x20", b:"Leg Curl 3x15", rest:"45s between pairs" },
-    ],
-    tip:"Tom Platz trained legs like this. Quads and hamstrings balance each other. Zero rest days for leg growth."
-  },
-  {
-    name:"Full Upper Body Superset",
-    icon:"🏆",
-    color:"#CC8800",
-    level:"ADVANCED",
-    desc:"For when you have limited time. Hit every upper body muscle in one brutal session.",
-    pairs:[
-      { a:"Bench Press 3x8", b:"Barbell Row 3x8", rest:"60s" },
-      { a:"Overhead Press 3x10", b:"Pull-Ups 3x10", rest:"60s" },
-      { a:"Lateral Raises 3x15", b:"Barbell Curl 3x12", rest:"45s" },
-      { a:"Tricep Pushdown 3x15", b:"Face Pulls 3x20", rest:"45s" },
-    ],
-    tip:"Mukesh Gahlot's full upper body approach. Used when time is short but intensity stays HIGH."
+    tip:"Rest 60 seconds between pairs — this keeps the pump without sacrificing strength. Your arms should be completely swollen by the end."
   },
 ];
 
@@ -276,6 +278,133 @@ const SONGS = [
   { title:"Work Hard Play Hard", artist:"Wiz Khalifa", tags:["english","pump"], yt:"https://youtube.com/results?search_query=wiz+khalifa+work+hard+play+hard" },
 ];
 
+// ===== WGER EXERCISE IMAGE MAP =====
+// Maps exercise name → wger exercise ID for real images
+const WGER_IDS = {
+  "Bench Press": 192,
+  "Incline Dumbbell Press": 165,
+  "Cable Flyes": 186,
+  "Dips (Chest)": 93,
+  "Pec Deck": 291,
+  "Decline Bench Press": 356,
+  "Dumbbell Pullover": 84,
+  "Deadlift": 241,
+  "Pull-Ups": 31,
+  "Barbell Row": 63,
+  "Lat Pulldown": 122,
+  "Seated Cable Row": 110,
+  "T-Bar Row": 221,
+  "Squat": 111,
+  "Romanian Deadlift": 91,
+  "Leg Press": 105,
+  "Leg Curl": 278,
+  "Calf Raises": 99,
+  "Hack Squat": 152,
+  "Leg Extension": 126,
+  "Overhead Press": 64,
+  "Lateral Raises": 85,
+  "Rear Delt Fly": 346,
+  "Face Pulls": 228,
+  "Arnold Press": 187,
+  "Barbell Curl": 72,
+  "Hammer Curl": 226,
+  "Tricep Pushdown": 125,
+  "Skull Crushers": 97,
+  "Close Grip Bench": 194,
+  "Concentration Curl": 75,
+  "Preacher Curl": 73,
+  "Plank": 318,
+  "Hanging Leg Raise": 198,
+  "Cable Crunch": 175,
+};
+
+function getExerciseImageUrl(name) {
+  const id = WGER_IDS[name];
+  if (!id) return null;
+  return `https://wger.de/en/exercise/${id}/view/base`;
+}
+
+function getWgerImageUrl(name) {
+  const id = WGER_IDS[name];
+  if (!id) return null;
+  // Direct image endpoint
+  return `https://wger.de/api/v2/exerciseimage/?exercise_base=${id}&format=json`;
+}
+
+// ===== FEMALE WORKOUT DATA =====
+const FEMALE_EXERCISES = [
+  // GLUTES & LEGS (most important for women)
+  { id:'f1', name:"Hip Thrust", part:"glutes", emoji:"🍑", diff:"BEGINNER",
+    legend:"Bret Contreras — the glute guy — says hip thrust is the #1 glute builder. Period.",
+    sets:["4x12-15","3x15-20","5x10"], tips:["Bar padded on hips","Drive through heels","Full hip extension at top","Squeeze glutes hard at peak"] },
+  { id:'f2', name:"Sumo Squat", part:"glutes", emoji:"🦵", diff:"BEGINNER",
+    legend:"Wide stance activates glutes and inner thighs more than regular squat.",
+    sets:["4x12-15","3x15"], tips:["Feet wider than shoulders","Toes pointed out 45°","Knees track over toes","Go deep for glute activation"] },
+  { id:'f3', name:"Romanian Deadlift (Women)", part:"glutes", emoji:"📐", diff:"INTERMEDIATE",
+    legend:"Best hamstring and glute exercise for women. Slow eccentric builds the shape.",
+    sets:["4x10-12","3x12"], tips:["Hinge at hips","Feel hamstring stretch","Keep back straight","Slow on the way down"] },
+  { id:'f4', name:"Cable Kickback", part:"glutes", emoji:"🦶", diff:"BEGINNER",
+    legend:"Direct glute isolation. Used by fitness models worldwide for shape and definition.",
+    sets:["4x15-20 each","3x20 each"], tips:["Squeeze at full extension","Don't swing the leg","Slow controlled movement","Feel the glute — not the lower back"] },
+  { id:'f5', name:"Leg Press (High Feet)", part:"glutes", emoji:"🦾", diff:"BEGINNER",
+    legend:"Feet high on the platform = more glutes. Feet low = more quads. Simple science.",
+    sets:["4x12-15","3x15-20"], tips:["Feet high and wide","Don't lock out knees","Full depth","Press through heels"] },
+  { id:'f6', name:"Walking Lunges", part:"legs", emoji:"🚶", diff:"BEGINNER",
+    legend:"Best all-round leg exercise for women. Builds quads, hamstrings, glutes simultaneously.",
+    sets:["3x12-15 each","4x10 each"], tips:["Long step forward","Back knee near ground","Torso upright","Alternate legs walking forward"] },
+  { id:'f7', name:"Abductor Machine", part:"glutes", emoji:"↔️", diff:"BEGINNER",
+    legend:"Targets the outer glutes and hip abductors — gives hips that round full shape.",
+    sets:["4x15-20","3x20-25"], tips:["Full range of motion","Slow on the way in","Don't lean forward","Squeeze outer glute at peak"] },
+
+  // UPPER BODY (toning focused)
+  { id:'f8', name:"Dumbbell Shoulder Press", part:"shoulders", emoji:"🏋️", diff:"BEGINNER",
+    legend:"Builds that toned shoulder cap women love. Light weight, full range.",
+    sets:["3x12-15","4x12"], tips:["Don't go too heavy","Full range of motion","Don't arch back","Press straight up"] },
+  { id:'f9', name:"Lateral Raises (Light)", part:"shoulders", emoji:"✈️", diff:"BEGINNER",
+    legend:"Creates that toned shoulder look. Higher reps, lighter weight for women.",
+    sets:["4x15-20","3x20"], tips:["Very light weight","Lead with elbows","Don't shrug","Feel the burn in the side delt"] },
+  { id:'f10', name:"Tricep Rope Pushdown", part:"arms", emoji:"⬇️", diff:"BEGINNER",
+    legend:"Best exercise for toning the back of the arm — the area most women want to target.",
+    sets:["4x15-20","3x20"], tips:["Spread rope at bottom","Keep elbows at sides","Full extension","Squeeze hard at bottom"] },
+  { id:'f11', name:"Dumbbell Bicep Curl", part:"arms", emoji:"💪", diff:"BEGINNER",
+    legend:"Toned arms start here. Light weight, perfect form, full squeeze.",
+    sets:["3x12-15","4x12"], tips:["Full extension at bottom","Squeeze at top","Don't swing","Alternate arms"] },
+  { id:'f12', name:"Chest Press (Machine)", part:"chest", emoji:"🤲", diff:"BEGINNER",
+    legend:"Safer than barbell for beginners. Builds upper body strength and posture.",
+    sets:["3x12-15","4x12"], tips:["Elbows at 90°","Full range","Don't lock out","Controlled movement"] },
+  { id:'f13', name:"Seated Row (Cable)", part:"back", emoji:"🚣", diff:"BEGINNER",
+    legend:"Great posture builder. Women with good back development look athletic and confident.",
+    sets:["3x12-15","4x12"], tips:["Chest up","Pull to belly button","Squeeze shoulder blades","Don't lean back too much"] },
+
+  // CORE
+  { id:'f14', name:"Crunches", part:"core", emoji:"🫀", diff:"BEGINNER",
+    legend:"Classic but effective. Quality over quantity — 20 good reps > 100 bad ones.",
+    sets:["3x20","4x15-20"], tips:["Hands behind head lightly","Lift with abs not neck","Full crunch — shoulders off ground","Slow eccentric"] },
+  { id:'f15', name:"Plank (Women)", part:"core", emoji:"📏", diff:"BEGINNER",
+    legend:"Best core stability exercise. Improves posture, flattens stomach over time.",
+    sets:["3x45s","4x30s"], tips:["Neutral spine","Squeeze abs and glutes","Breathe steadily","Don't let hips sag"] },
+  { id:'f16', name:"Russian Twist", part:"core", emoji:"🌀", diff:"BEGINNER",
+    legend:"Targets obliques — creates that hourglass waist shape.",
+    sets:["4x20","3x25"], tips:["Feet off ground for harder","Twist from waist","Hold each side briefly","Use light weight"] },
+];
+
+const FEMALE_DIET = {
+  goals: ["🍑 Booty Gains", "🔥 Fat Loss & Tone", "💪 Lean Muscle", "⚖️ Maintain Shape"],
+  tips: [
+    { icon:"🥩", title:"Protein Is Your Best Friend", body:"Aim for 1.6-2g per kg bodyweight. Chicken, eggs, paneer, dahi — these build the muscle that gives you shape, not bulk." },
+    { icon:"🍚", title:"Don't Fear Carbs", body:"Carbs give you energy to train hard. Rice, roti, oats — eat them around your workout. Cut carbs at night for fat loss." },
+    { icon:"💧", title:"Water = Results", body:"Drink 3-4 liters daily. Dehydration causes bloating, poor performance, and slower fat loss. Start your day with 2 glasses." },
+    { icon:"⏰", title:"Eating Timing Matters", body:"Pre-workout: banana + protein. Post-workout: protein + rice within 45 min. This window is when your muscles absorb nutrition best." },
+    { icon:"🚫", title:"What To Avoid", body:"Ultra-processed food, excessive sugar, liquid calories (juice, cold drinks). These spike insulin and store fat — especially around the waist." },
+  ]
+};
+
+const FEMALE_LEGENDS = [
+  { name:"Noel Deyzel (Female Edition Tip)", avatar:"💪", tip:"Women don't get bulky from lifting heavy. Biggest myth in fitness. You don't have the testosterone to get bulky — you'll just get lean and strong.", quote:"Pick up the heavy weights. You won't regret it." },
+  { name:"Kayla Itsines", avatar:"👩", tip:"Consistency over 12 weeks beats any crash diet or extreme workout. Show up 4 days a week, eat real food, sleep 8 hours. That is the real secret.", quote:"It is not about being perfect. It is about effort." },
+  { name:"Rujuta Diwekar", avatar:"🇮🇳", tip:"Dal chawal is not the enemy. Eat local, eat seasonal, eat with family. Indian food is medicine when eaten right — don't replace it with protein bars and supplements.", quote:"Ghar ka khana hi best supplement hai." },
+];
+
 // Calorie analogies — fun comparison
 const CAL_ANALOGIES = [
   { cal:50,  text:"That's like 1 Oreo cookie. Keep going! 🍪" },
@@ -298,6 +427,21 @@ let workoutLog = [];
 let streak = 0;
 let lastWorkoutDate = '';
 let customExercises = [];
+
+// ===== THEME =====
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme === 'dark' ? '' : theme);
+  localStorage.setItem('if_theme', theme);
+  document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
+  const dot = document.getElementById('td-' + theme);
+  if (dot) dot.classList.add('active');
+}
+
+function loadTheme() {
+  const saved = localStorage.getItem('if_theme') || 'dark';
+  setTheme(saved);
+}
+
 
 function uKey(k) {
   const uid = currentUser ? currentUser.uid : 'guest';
@@ -401,6 +545,7 @@ function startApp() {
   renderLegends();
   renderPlaylist('all');
   renderSupersets();
+  renderFemale();
 }
 
 // ===== CUSTOM EXERCISE =====
@@ -445,6 +590,7 @@ function showToast(msg) {
 
 // ===== SPLASH =====
 window.addEventListener('load', () => {
+  loadTheme(); // Apply saved theme immediately
   setTimeout(() => {
     const sp = document.getElementById('splash');
     sp.classList.add('out');
@@ -507,12 +653,25 @@ function renderExercises(part) {
 }
 
 function openModal(id) {
-  // Find in both built-in and custom
-  const allEx = [...EXERCISES, ...(customExercises || [])];
+  const allEx = [...EXERCISES, ...(customExercises || []), ...FEMALE_EXERCISES];
   const ex = allEx.find(e => String(e.id) === String(id));
   if (!ex) return;
+
+  const wgerId = WGER_IDS[ex.name];
+  // Try multiple wger image URL patterns
+  const imgSrc = wgerId ? `https://wger.de/media/exercise-images/${wgerId}/main.png` : null;
+  const imgSection = imgSrc
+    ? `<div class="ex-img-wrap">
+        <img class="ex-demo-img" 
+          src="${imgSrc}"
+          onerror="this.src='https://wger.de/static/images/logo.png';this.style.objectFit='contain';this.style.padding='20px';this.style.opacity='0.3'"
+          alt="${ex.name}" loading="lazy" />
+        <div class="ex-img-label">via wger.de</div>
+       </div>`
+    : `<div class="ex-img-placeholder">${ex.emoji}</div>`;
+
   document.getElementById('modalContent').innerHTML = `
-    <div class="modal-ex-emoji">${ex.emoji}</div>
+    ${imgSection}
     <div class="modal-ex-name">${ex.name}</div>
     <div class="modal-ex-part">${ex.part.toUpperCase()} · ${ex.diff}</div>
     <div class="modal-legend">💬 "${ex.legend}"</div>
@@ -780,6 +939,64 @@ function renderPlaylist(filter) {
   }
 }
 
+
+// ===== FEMALE SECTION =====
+function renderFemale() {
+  // Body part filter
+  const part = 'all';
+  renderFemaleExercises(part);
+  renderFemaleDiet();
+}
+
+function renderFemaleExercises(part) {
+  const grid = document.getElementById('femaleExGrid');
+  if (!grid) return;
+  const filtered = part === 'all' ? FEMALE_EXERCISES : FEMALE_EXERCISES.filter(e => e.part === part);
+  grid.innerHTML = filtered.map(ex => `
+    <div class="ex-card" onclick="openModal('${ex.id}')">
+      <div class="ex-card-emoji">${ex.emoji}</div>
+      <div class="ex-card-diff">${ex.diff}</div>
+      <div class="ex-card-body">
+        <div class="ex-card-name">${ex.name}</div>
+        <div class="ex-card-part">${ex.part.toUpperCase()}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterFemalePart(part, btn) {
+  document.querySelectorAll('.female-part-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderFemaleExercises(part);
+}
+
+function renderFemaleDiet() {
+  const el = document.getElementById('femaleDietTips');
+  if (!el) return;
+  el.innerHTML = FEMALE_DIET.tips.map(t => `
+    <div class="legend-card" style="margin-bottom:10px">
+      <div class="legend-avatar">${t.icon}</div>
+      <div>
+        <div class="legend-name">${t.title}</div>
+        <div class="legend-tip">${t.body}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const legEl = document.getElementById('femaleLegends');
+  if (!legEl) return;
+  legEl.innerHTML = FEMALE_LEGENDS.map(l => `
+    <div class="legend-card">
+      <div class="legend-avatar">${l.avatar}</div>
+      <div>
+        <div class="legend-name">${l.name}</div>
+        <div class="legend-tip">${l.tip}</div>
+        <div class="legend-quote">${l.quote}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
 // ===== SUPERSETS =====
 function renderSupersets() {
   const grid = document.getElementById('supersetGrid');
@@ -827,10 +1044,41 @@ function openSuperset(i) {
   `;
   document.getElementById('exModal').classList.remove('hidden');
 }
+
+// ===== OFFLINE COACH (works without internet/API) =====
+function getOfflineCoachReply(msg) {
+  const m = msg.toLowerCase();
+  
+  if (m.includes('chest') || m.includes('bench')) return `**Chest Training Tips 💪**<br><br>• Flat Bench Press: 4x8-12 — mass builder<br>• Incline DB Press: 4x10 — upper chest<br>• Cable Fly: 3x15 — isolation<br>• Pec Deck: 3x15 — squeeze and hold<br><br>CBum tip: Always warm up rotator cuff before chest day. 2-3 light sets of face pulls.<br><br>IRON NEVER LIES. 🔥`;
+  
+  if (m.includes('back') || m.includes('pull')) return `**Back Training Tips 🔄**<br><br>• Deadlift: 4x5 — king of all lifts<br>• Pull-Ups: 4x failure — width builder<br>• Barbell Row: 4x8 — thickness<br>• Lat Pulldown: 3x12 — V-taper<br><br>Dorian Yates tip: Pull with your elbows, not your hands. Game changer.<br><br>Keep lifting! 💪`;
+  
+  if (m.includes('leg') || m.includes('squat')) return `**Leg Training Tips 🦵**<br><br>• Squat: 5x5-8 — foundation<br>• Romanian Deadlift: 4x10 — hamstrings<br>• Leg Press: 4x15 — volume<br>• Leg Extension: 4x20 — isolation<br>• Calf Raises: 5x25 — never skip!<br><br>Tom Platz trained legs 3x a week. That's why his legs were legendary.<br><br>IRON NEVER LIES. 🔥`;
+  
+  if (m.includes('shoulder') || m.includes('delt')) return `**Shoulder Training Tips ✈️**<br><br>• OHP: 4x8-12 — mass<br>• Lateral Raises: 5x15-20 — width (CBum's secret weapon)<br>• Rear Delt Fly: 4x20 — 3D look<br>• Face Pulls: 4x20 — health + rear delts<br><br>Light weight, high reps on laterals. Feel the burn — not the trap.<br><br>Keep lifting! 💪`;
+  
+  if (m.includes('arm') || m.includes('bicep') || m.includes('tricep')) return `**Arm Training Tips 💪**<br><br>**Biceps:**<br>• Barbell Curl: 4x8-10<br>• Hammer Curl: 3x12<br>• Concentration Curl: 3x12 each<br><br>**Triceps:**<br>• Close Grip Bench: 4x10<br>• Skull Crushers: 4x10<br>• Cable Pushdown: 4x15<br><br>Triceps = 2/3 of arm size. Train them harder than biceps!<br><br>IRON NEVER LIES. 🔥`;
+  
+  if (m.includes('diet') || m.includes('protein') || m.includes('food') || m.includes('eat') || m.includes('khana')) return `**Diet Tips 🍗**<br><br>• Protein: 2g per kg bodyweight daily<br>• Chicken, eggs, paneer, dahi — desi protein sources<br>• Pre-workout: banana + protein shake<br>• Post-workout: rice + chicken within 45 min<br>• Water: 4 liters daily<br><br>Mukesh Gahlot tip: Dal chawal aur eggs se bhi champion body ban sakti hai. Supplements optional hain.<br><br>Keep lifting! 💪`;
+  
+  if (m.includes('beginner') || m.includes('start') || m.includes('shuru') || m.includes('naya')) return `**Beginner Plan 🌱**<br><br>3 days/week — Monday, Wednesday, Friday:<br><br>**Each day (Full Body):**<br>• Squat: 3x10<br>• Bench Press: 3x10<br>• Barbell Row: 3x10<br>• OHP: 3x10<br>• Plank: 3x30s<br><br>Focus on form for first 3 months. Heavy weight comes later.<br><br>IRON NEVER LIES. 🔥`;
+  
+  if (m.includes('cbum') || m.includes('arnold') || m.includes('split') || m.includes('ppl')) return `**CBum PPL Split 🏆**<br><br>**Push (Mon/Thu):** Chest + Shoulders + Triceps<br>**Pull (Tue/Fri):** Back + Biceps<br>**Legs (Wed/Sat):** Quads + Hamstrings + Calves<br><br>CBum trains 6 days/week. Rest 1 day. Each muscle gets hit twice per week.<br><br>Key: Progressive overload every week. Add weight or reps — always.<br><br>Keep lifting! 💪`;
+
+  if (m.includes('fat') || m.includes('weight loss') || m.includes('slim') || m.includes('cut') || m.includes('patle')) return `**Fat Loss Tips 🔥**<br><br>• Calorie deficit: 300-400 kcal below maintenance<br>• Keep protein HIGH (2g/kg) — preserve muscle<br>• Cardio: 20-30 min after weights, 3-4x/week<br>• Sleep 7-8 hours — cortisol destroys fat loss<br>• Avoid liquid calories — chai mein chini band karo!<br><br>Fat loss is 80% diet, 20% gym. Kitchen mein hi results bante hain.<br><br>IRON NEVER LIES. 🔥`;
+
+  if (m.includes('rest') || m.includes('recovery') || m.includes('sleep')) return `**Recovery Tips 😴**<br><br>• Sleep 7-9 hours — muscle grows during sleep, not gym<br>• Protein before bed — casein or dahi<br>• Deload every 6-8 weeks — go light for 1 week<br>• Stretch post-workout — 10 minutes minimum<br>• Stay hydrated — 4 liters water daily<br><br>Arnold slept 8 hours every night. Recovery IS training.<br><br>Keep lifting! 💪`;
+
+  // Default response
+  return `**Coach IronFlow Here! 🤖**<br><br>Main abhi offline mode mein hoon bhai — internet pe jaoge toh live AI coach milega!<br><br>Tab tak yeh yaad rakh:<br>• Consistency > Intensity<br>• Progressive overload hi growth ka secret hai<br>• Form perfect rakho — ego mat karo<br>• 80% diet, 20% gym<br><br>Splits tab mein dekh — complete workout plans hain wahan!<br><br>IRON NEVER LIES. 🔥`;
+}
+
 async function askAI(prompt) {
   document.getElementById('aiInput').value = prompt;
   sendAI();
 }
+
+let aiHistory = [];
 
 async function sendAI() {
   const input = document.getElementById('aiInput');
@@ -839,18 +1087,32 @@ async function sendAI() {
   input.value = '';
 
   const chat = document.getElementById('aiChat');
-
-  // Clear welcome if first msg
   const welcome = chat.querySelector('.ai-welcome');
   if (welcome) welcome.remove();
 
-  // User bubble
   chat.innerHTML += `<div class="ai-msg user">${userMsg}</div>`;
-
-  // Loading
   const loadId = 'load-' + Date.now();
   chat.innerHTML += `<div class="ai-msg coach ai-loading" id="${loadId}"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>`;
   chat.scrollTop = chat.scrollHeight;
+
+  aiHistory.push({ role:"user", content: userMsg });
+
+  const SYSTEM = `You are an elite gym coach AI inside IronFlow — inspired by CBum, Arnold Schwarzenegger, Mukesh Gahlot, and Dorian Yates. Give practical, no-BS gym advice. Mix Hindi and English naturally (Hinglish). Be motivating but direct. Give specific sets/reps when asked. Use bullet points for lists. Keep responses under 300 words. End with "Keep lifting! 💪" or "IRON NEVER LIES. 🔥"`;
+
+  // Check if running inside Claude.ai (API available) or standalone
+  const isClaudeEnv = window.location.hostname.includes('claude') || 
+                      window.location.hostname.includes('anthropic') ||
+                      window.location.protocol === 'blob:';
+  
+  if (!isClaudeEnv) {
+    // Running locally - use smart offline coach
+    document.getElementById(loadId)?.remove();
+    const reply = getOfflineCoachReply(userMsg);
+    aiHistory.push({ role:"assistant", content: reply });
+    chat.innerHTML += `<div class="ai-msg coach">${reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
+    chat.scrollTop = chat.scrollHeight;
+    return;
+  }
 
   try {
     const res = await fetch("https://api.anthropic.com/v1/messages", {
@@ -858,22 +1120,21 @@ async function sendAI() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
-        system: `You are an elite gym coach AI inside the IronFlow app — inspired by legends like CBum, Arnold Schwarzenegger, Mukesh Gahlot, and Dorian Yates. 
-You give practical, no-BS gym advice. Mix Hindi and English naturally (Hinglish is great). 
-Be motivating but direct. Give specific sets/reps when relevant. 
-Keep answers concise but complete — use bullet points where helpful. 
-Sign off occasionally with "Keep lifting! 💪" or "IRON NEVER LIES. 🔥"`,
-        messages: [{ role: "user", content: userMsg }]
+        max_tokens: 600,
+        system: SYSTEM,
+        messages: aiHistory.slice(-6)
       })
     });
+    if (!res.ok) throw new Error('API ' + res.status);
     const data = await res.json();
-    const reply = data.content?.[0]?.text || "Bhai kuch technical issue aa gaya. Dobara try karo! 💪";
-    document.getElementById(loadId).remove();
-    chat.innerHTML += `<div class="ai-msg coach">${reply.replace(/\n/g,'<br>')}</div>`;
+    const reply = data.content?.[0]?.text || "Thoda technical issue aa gaya bhai. Dobara try karo!";
+    aiHistory.push({ role:"assistant", content: reply });
+    document.getElementById(loadId)?.remove();
+    chat.innerHTML += `<div class="ai-msg coach">${reply.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')}</div>`;
   } catch(e) {
-    document.getElementById(loadId).remove();
-    chat.innerHTML += `<div class="ai-msg coach">Network issue bhai! Phir try karo. Aur gym mat chhodo! 💪</div>`;
+    document.getElementById(loadId)?.remove();
+    const reply = getOfflineCoachReply(userMsg);
+    chat.innerHTML += `<div class="ai-msg coach">${reply}</div>`;
   }
   chat.scrollTop = chat.scrollHeight;
 }
